@@ -82,7 +82,7 @@ def processConsecutiveFrames(prev, curr):
 
 
 def main():
-    file_name = 'bolt-detection'
+    file_name = 'fruit-and-vegetable-detection'
     # Open image (replace with video feed)
     cap = cv2.VideoCapture(f'data/{file_name}.mp4')
     line_width = 2
@@ -93,8 +93,10 @@ def main():
     # Set first frame as background
     background = getMedianFrame(f'data/{file_name}.mp4')
 
-    changes = cv2.VideoWriter(f'outputs/{file_name}-changes.mp4', cv2.VideoWriter.fourcc('m', 'p', '4', 'v'), 20, (background.shape[1], background.shape[0]))
-    diffs = cv2.VideoWriter(f'outputs/{file_name}-diffs.mp4', cv2.VideoWriter.fourcc('m', 'p', '4', 'v'), 20, (background.shape[1], background.shape[0]))
+    fps = cap.get(cv2.CAP_PROP_FPS)
+
+    changes = cv2.VideoWriter(f'outputs/{file_name}-changes.mp4', cv2.VideoWriter.fourcc('m', 'p', '4', 'v'), fps, (background.shape[1], background.shape[0]))
+    diffs = cv2.VideoWriter(f'outputs/{file_name}-diffs.mp4', cv2.VideoWriter.fourcc('m', 'p', '4', 'v'), fps, (background.shape[1], background.shape[0]))
     
     while (cap.isOpened()):
         ret, curr = cap.read()
